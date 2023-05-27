@@ -1,0 +1,27 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "studyxiao", email = "studyxiao@163.com"},
+]
+dependencies = [
+    "flask>=2.3.2",
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.0.270",
+    "black>=23.3.0",
+]
+
+[tool.black]
+line-length = 120
+required-version = "22.3.0"
+
+[tool.ruff]
+line-length = 120
+required-version = "0.0.270"

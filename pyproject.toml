@@ -17,3 +17,88 @@ dependencies = [
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.3.0",
+    "ruff>=0.0.270",
+]
+
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
+[tool.black]
+line-length = 120
+required-version = "22.3.0"
+# 23.1.0 之后自动推断 python 版本
+target-version = ["py311"]
+
+[tool.ruff]
+required-version = "0.0.270"
+line-length = 120
+# 自动推断 python 版本
+target-version = "py311"
+
+select = [
+    "A",   # flake8-builtins
+    "ANN",
+    "B",   # flake8-bugbear
+    "BLE", # flake8-blind-except
+    "C4",  # flake8-comprehensions
+    "C90", # mccabe
+    "D",   # pydocstyle
+    "DJ",  # flake8-django
+    "DTZ", # flake8-datetimez
+    "E",   # pycodestyle errors
+    "ERA", # eradicate
+    "EXE", # flake8-executable
+    "F",   # pyflakes
+    "G",   # flake8-logging-format
+    # "I",   # isort
+    "ICN", # flake8-import-conventions
+    "ISC", # flake8-implicit-str-concat
+    "N",   # pep8-naming
+    "PIE", # flake8-pie
+    "PLC", # pylint - convention
+    "PLE", # pylint - error
+    "PLW", # pylint - warning
+    "PT",
+    "PTH", # flake8-use-pathlib
+    "Q",   # flake8-quotes
+    "RET", # flake8-return
+    "RUF", # Ruff-specific rules
+    "S",   # flake8-bandit
+    "SIM", # flake8-simplify
+    "T10", # flake8-debugger
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+    "W",   # pycodestyle - warning
+    "YTT", # flake8-2020
+]
+ignore = [
+    "D100",   # pydocstyle - missing docstring in public module
+    "D101",   # pydocstyle - missing docstring in public class
+    "D102",   # pydocstyle - missing docstring in public method
+    "D103",   # pydocstyle - missing docstring in public function
+    "D104",   # pydocstyle - missing docstring in public package
+    "D105",   # pydocstyle - missing docstring in magic method
+    "D106",   # pydocstyle - missing docstring in public nested class
+    "D107",   # pydocstyle - missing docstring in __init__
+    'D211',
+    'D213',
+    'ANN101',
+    'ANN102',
+    'ANN401',
+    'N818',
+]
+respect-gitignore = true
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+[tool.ruff.flake8-builtins]
+builtins-ignorelist = ["id"]

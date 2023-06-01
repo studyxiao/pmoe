@@ -8,20 +8,12 @@ authors = [
 ]
 dependencies = [
     "flask>=2.3.2",
+    "python-dotenv>=1.0.0",
+    "redis>=4.5.5",
+    "celery>=5.2.7",
+    "sqlalchemy>=2.0.15",
+    "gunicorn>=20.1.0",
+    "gevent>=22.10.2",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "ruff>=0.0.270",
-    "black>=23.3.0",
-]
-
-[tool.black]
-line-length = 120
-required-version = "22.3.0"
-
-[tool.ruff]
-line-length = 120
-required-version = "0.0.270"

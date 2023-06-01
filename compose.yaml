@@ -1,0 +1,101 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+    command: gunicorn app.app:app -k gevent -w 1 --bind 0.0.0.0:8000 --chdir=/home/appuser/
+    # ports:
+    #   - "8000:8000"
+    expose:
+      - 8000
+    volumes:
+      - ./app/:/home/appuser/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:8.0.31
+    ports:
+      - 3306:3306
+    privileged: true
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./compose/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    env_file:
+      - .env
+    restart: always
+  redis:
+    build: ./compose/redis/
+    # image: redis:7-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - ENABLE_OVERCOMMIT_MEMORY=true
+    restart: always
+  meilisearch:
+    image: getmeili/meilisearch:v1.1
+    ports:
+      - "7700:7700"
+    environment:
+      - MEILI_MASTER_KEY=masterKey
+      - MEILI_NO_ANALYTICS=true
+    volumes:
+      - meili-data:/meili_data
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+    command: celery -A app.app.celery_app worker --loglevel=info
+    volumes:
+      - ./app/:/home/appuser/app/
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+    command: celery -A app.app.celery_app beat -l info
+    volumes:
+      - ./app/:/home/appuser/app/
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/web/Dockerfile
+    command: celery -A app.app.celery_app flower --broker="${CELERY_BROKER_URL}"
+    volumes:
+      - ./app/:/home/appuser/app/
+    env_file:
+      - .env
+    ports:
+      - 5557:5555
+    depends_on:
+      - redis
+      - db
+  nginx:
+    build: ./compose/nginx
+    ports:
+      - "8001:80"
+    depends_on:
+      - web
+volumes:
+  db-data:
+  redis-data:
+  meili-data:

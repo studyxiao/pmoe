@@ -1,0 +1,16 @@
+.gitub/
+.venv/
+.vscode/
+docs/
+.editorconfig
+.gitignore
+.pdm-python
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+README.md
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

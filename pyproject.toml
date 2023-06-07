@@ -15,6 +15,7 @@ dependencies = [
     "gunicorn>=20.1.0",
     "gevent>=22.10.2",
     "pyjwt>=2.7.0",
+    "pymysql>=1.0.3",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -91,6 +92,7 @@ ignore = [
     'ANN102',
     'ANN401',
     'N818',
+    'RUF200', # pyproject version
 ]
 respect-gitignore = true
 

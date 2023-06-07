@@ -226,6 +226,12 @@ requires_python = ">=3.7"
 summary = "JSON Web Token implementation in Python"
 
 [[package]]
+name = "pymysql"
+version = "1.0.3"
+requires_python = ">=3.7"
+summary = "Pure Python MySQL Driver"
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
@@ -330,7 +336,7 @@ dependencies = [
 lock_version = "4.2"
 cross_platform = true
 groups = ["default", "dev"]
-content_hash = "sha256:ffa60047c726ce00d0b8f891cc4e874f2a745235b1fbbf2a5991b3327b5da427"
+content_hash = "sha256:784765c7132bd8e90a776929f3e12bd623f8f156045edcde3f975a734de9df84"
 
 [metadata.files]
 "amqp 5.1.1" = [
@@ -681,6 +687,10 @@ content_hash = "sha256:ffa60047c726ce00d0b8f891cc4e874f2a745235b1fbbf2a5991b3327
 "pyjwt 2.7.0" = [
     {url = "https://files.pythonhosted.org/packages/c7/e8/01b2e35d81e618a8212e651e10c91660bdfda49c1d15ce66f4ca1ff43649/PyJWT-2.7.0-py3-none-any.whl", hash = "sha256:ba2b425b15ad5ef12f200dc67dd56af4e26de2331f965c5439994dad075876e1"},
     {url = "https://files.pythonhosted.org/packages/e0/f0/9804c72e9a314360c135f42c434eb42eaabb5e7ebad760cbd8fc7023be38/PyJWT-2.7.0.tar.gz", hash = "sha256:bd6ca4a3c4285c1a2d4349e5a035fdf8fb94e04ccd0fcbe6ba289dae9cc3e074"},
+]
+"pymysql 1.0.3" = [
+    {url = "https://files.pythonhosted.org/packages/5b/b1/bb485db528749f07d6f11aa123e5f931f2e465a9c27945d6122bae5f7df7/PyMySQL-1.0.3-py3-none-any.whl", hash = "sha256:89fc6ae41c0aeb6e1f7710cdd623702ea2c54d040565767a78b00a5ebb12f4e5"},
+    {url = "https://files.pythonhosted.org/packages/7a/6f/b3fadf41239b9ca7ea3857c440c499fd2e9e0f410bb942bd8d593dce4bd6/PyMySQL-1.0.3.tar.gz", hash = "sha256:3dda943ef3694068a75d69d071755dbecacee1adf9a1fc5b206830d2b67d25e8"},
 ]
 "python-dateutil 2.8.2" = [
     {url = "https://files.pythonhosted.org/packages/36/7a/87837f39d0296e723bb9b62bbb257d0355c7f6128853c78955f57342a56d/python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},

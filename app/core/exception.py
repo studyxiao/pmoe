@@ -38,7 +38,7 @@ class APIException(HTTPException):
     status_code: int = 500
     error_code: int = 9999
     message: str = "Service Error"
-    errors: list[dict[str, Any]] | None = None
+    errors: list[Any] | None = None
 
     def __init__(
         self,
@@ -46,7 +46,7 @@ class APIException(HTTPException):
         status_code: int | None = None,
         error_code: int | None = None,
         message: str | None = None,
-        errors: list[dict[str, Any]] | None = None,
+        errors: list[Any] | None = None,
     ) -> None:
         if status_code is not None:
             self.status_code = status_code
@@ -76,4 +76,22 @@ class APIException(HTTPException):
 class NotFound(APIException):
     status_code: int = 404
     message: str = "Not Found"
+    error_code: int = 1004
+
+
+class ParameterException(APIException):
+    status_code: int = 400
+    message: str = "Parameter Error"
     error_code: int = 1000
+
+
+class Unauthorized(APIException):
+    status_code: int = 401
+    message: str = "Unauthorized"
+    error_code: int = 1001
+
+
+class Forbidden(APIException):
+    status_code: int = 403
+    message: str = "Forbidden"
+    error_code: int = 1003

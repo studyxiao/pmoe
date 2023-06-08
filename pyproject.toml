@@ -16,7 +16,7 @@ dependencies = [
     "gevent>=22.10.2",
     "pyjwt>=2.7.0",
     "pymysql>=1.0.3",
-    "pydantic>=1.10.8",
+    "pydantic>=1.10.9",
     "structlog>=23.1.0",
 ]
 requires-python = ">=3.11"
@@ -25,7 +25,7 @@ license = {text = "MIT"}
 [tool.pdm.dev-dependencies]
 dev = [
     "black>=23.3.0",
-    "ruff>=0.0.271",
+    "ruff>=0.0.272",
 ]
 
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
@@ -36,7 +36,7 @@ required-version = "23.3.0"
 target-version = ["py311"]
 
 [tool.ruff]
-required-version = "0.0.271"
+required-version = "0.0.272"
 line-length = 120
 # 自动推断 python 版本
 target-version = "py311"

@@ -1,9 +1,13 @@
 from celery import Celery
 from flask import Flask
 
+from config import config
+
 app = Flask(__name__)
 
 celery_app = Celery(__name__)
+
+app.config.from_object(config)
 
 
 @app.get("/")

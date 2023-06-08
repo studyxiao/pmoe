@@ -293,6 +293,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "structlog"
+version = "23.1.0"
+requires_python = ">=3.7"
+summary = "Structured Logging for Python"
+
+[[package]]
 name = "typing-extensions"
 version = "4.6.3"
 requires_python = ">=3.7"
@@ -345,7 +351,7 @@ dependencies = [
 lock_version = "4.2"
 cross_platform = true
 groups = ["default", "dev"]
-content_hash = "sha256:521abd1bf1cc413a9d527b22235a3859d63480ad61a2f3643ae4771e652f6e44"
+content_hash = "sha256:e4734d5d25ea7ea6c31a933d26ceea324f1505afb1bdadd3c6b6d1f7005e6c1e"
 
 [metadata.files]
 "amqp 5.1.1" = [
@@ -820,6 +826,10 @@ content_hash = "sha256:521abd1bf1cc413a9d527b22235a3859d63480ad61a2f3643ae4771e6
     {url = "https://files.pythonhosted.org/packages/ee/4d/a236fa0f28b40ba60ecd49585c1d99b29811b701a258d9c329982cea43c1/SQLAlchemy-2.0.15-cp311-cp311-win32.whl", hash = "sha256:88ab245ed2c96265441ed2818977be28c840cfa5204ba167425d6c26eb67b7e7"},
     {url = "https://files.pythonhosted.org/packages/f6/a2/34fbd4540d03da565721fe234565ec615792cb36a471abbee9026663d989/SQLAlchemy-2.0.15-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:f6fd3c88ea4b170d13527e93be1945e69facd917661d3725a63470eb683fbffe"},
     {url = "https://files.pythonhosted.org/packages/f7/84/0c44149afc434bbb5bb8e53fc096778d6e28a28f2f6a456fc2210070efa6/SQLAlchemy-2.0.15-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:6b42913a0259267e9ee335da0c36498077799e59c5e332d506e72b4f32de781d"},
+]
+"structlog 23.1.0" = [
+    {url = "https://files.pythonhosted.org/packages/0c/b2/0c0951c78f3f59ce44e93cb9b2140d305a00bb8262532041c702d4d4300a/structlog-23.1.0-py3-none-any.whl", hash = "sha256:79b9e68e48b54e373441e130fa447944e6f87a05b35de23138e475c05d0f7e0e"},
+    {url = "https://files.pythonhosted.org/packages/9e/c4/688d14600f3a8afa31816ac95220f2548648e292c3ff2262057aa51ac2fb/structlog-23.1.0.tar.gz", hash = "sha256:270d681dd7d163c11ba500bc914b2472d2b50a8ef00faa999ded5ff83a2f906b"},
 ]
 "typing-extensions 4.6.3" = [
     {url = "https://files.pythonhosted.org/packages/42/56/cfaa7a5281734dadc842f3a22e50447c675a1c5a5b9f6ad8a07b467bffe7/typing_extensions-4.6.3.tar.gz", hash = "sha256:d91d5919357fe7f681a9f2b5b4cb2a5f1ef0a1e9f59c4d8ff0d3491e05c0ffd5"},

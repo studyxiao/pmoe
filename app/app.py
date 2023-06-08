@@ -7,5 +7,8 @@ celery_app = Celery(__name__)
 
 
 @app.get("/")
-def index():
+def index() -> str:
+    from app.core.exception import NotFound
+
+    raise NotFound(message="Hello World!")
     return "Hello World!"

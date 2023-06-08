@@ -21,10 +21,12 @@ class DB:
 
         app.before_request(self.before_request)
         app.teardown_request(self.teardown_request)
-
-        connect_args = {"check_same_thread": False} if "sqlite" in app.config.get("DB_URL") else {}
+        db_url = app.config.get("DB_URL")
+        if db_url is None:
+            raise ValueError("DB_URL must be set")
+        connect_args = {"check_same_thread": False} if "sqlite" in db_url else {}
         self.engine = create_engine(
-            app.config.get("DB_URL"),
+            db_url,
             connect_args=connect_args,
             pool_size=app.config.get("DB_POOL_SIZE"),
             pool_recycle=7200,

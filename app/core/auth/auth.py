@@ -1,7 +1,7 @@
 """JWT 认证.
 
 环境变量:
-- JWT_SECRET_KEY: 密钥
+- JWT_SECRET_KEY: 密钥[必须],或设置 SECRET_KEY
 - JWT_ALGORITHM: 算法
 - JWT_ACCESS_TOKEN_EXPIRES: 过期时间
 - JWT_TOKEN_URL: 获取 token 的路由.

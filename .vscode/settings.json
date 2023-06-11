@@ -11,5 +11,6 @@
   "files.insertFinalNewline": true,
   "files.exclude": {
     "**/__pycache__": true
-  }
+  },
+  "python.analysis.typeCheckingMode": "strict"
 }

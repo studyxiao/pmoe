@@ -18,6 +18,7 @@ dependencies = [
     "pymysql>=1.0.3",
     "pydantic>=1.10.9",
     "structlog>=23.1.0",
+    "theine>=0.4.0",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -26,6 +27,7 @@ license = {text = "MIT"}
 dev = [
     "black>=23.3.0",
     "ruff>=0.0.272",
+    "rich>=13.4.1",
 ]
 
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
@@ -106,7 +108,7 @@ respect-gitignore = true
 convention = "google"
 
 [tool.ruff.flake8-builtins]
-builtins-ignorelist = ["id"]
+builtins-ignorelist = ["id", "set"]
 
 [tool.ruff.mccabe]
 max-complexity = 15

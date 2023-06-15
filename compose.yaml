@@ -3,13 +3,15 @@ services:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: gunicorn app.app:app -k gevent -w 1 --bind 0.0.0.0:8000 --chdir=/home/appuser/
+    command: gunicorn app.app:app -c config/gunicorn.py
     # ports:
     #   - "8000:8000"
     expose:
       - 8000
     volumes:
-      - ./app/:/home/appuser/app/
+      - ./app:/home/appuser/app
+      - ./config:/home/appuser/config
+      - ./task:/home/appuser/task
     env_file:
       - ./.env
     depends_on:
@@ -48,14 +50,15 @@ services:
       - MEILI_NO_ANALYTICS=true
     volumes:
       - meili-data:/meili_data
-
   celery_worker:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: celery -A app.app.celery_app worker --loglevel=info
+    command: watchfiles --filter python 'celery -A task.app worker --loglevel=info'
     volumes:
-      - ./app/:/home/appuser/app/
+      - ./app:/home/appuser/app
+      - ./config:/home/appuser/config
+      - ./task:/home/appuser/task
     env_file:
       - .env
     depends_on:
@@ -66,9 +69,11 @@ services:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: celery -A app.app.celery_app beat -l info
+    command: celery -A task.app beat -l info
     volumes:
-      - ./app/:/home/appuser/app/
+      - ./app:/home/appuser/app
+      - ./config:/home/appuser/config
+      - ./task:/home/appuser/task
     env_file:
       - .env
     depends_on:
@@ -79,9 +84,11 @@ services:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: celery -A app.app.celery_app flower --broker="${CELERY_BROKER_URL}"
+    command: celery -A task.app flower --broker="${CELERY_BROKER_URL}"
     volumes:
-      - ./app/:/home/appuser/app/
+      - ./app:/home/appuser/app
+      - ./config:/home/appuser/config
+      - ./task:/home/appuser/task
     env_file:
       - .env
     ports:

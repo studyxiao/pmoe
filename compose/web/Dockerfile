@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # builder 安装依赖
-FROM python:3.11.3-slim-bullseye AS builder
+FROM python:3.11.4-slim-bullseye AS builder
 
 # security updates and bug fixes
 RUN <<EOF
@@ -22,7 +22,7 @@ COPY --link pyproject.toml pdm.lock ./
 RUN --mount=type=cache,target=/root/.cache/pdm pdm sync
 
 # stage 2
-FROM python:3.11.3-slim-bullseye
+FROM python:3.11.4-slim-bullseye
 
 # security updates and bug fixes
 RUN <<EOF
@@ -46,9 +46,9 @@ ENV VIRTUAL_ENV=/home/appuser/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # copy shell script
-COPY --link --chown=appuser compose/web/entrypoint.sh ./
-RUN chmod +x entrypoint.sh
+COPY --link --chown=appuser compose/web/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD ["flask", "run", "--host","0.0.0.0", "--port", "8000"]
+# CMD ["flask", "run", "--host","0.0.0.0", "--port", "8000"]

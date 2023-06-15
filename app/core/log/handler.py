@@ -81,9 +81,6 @@ class LinRotatingFileHandler(BaseRotatingHandler):
         year_month = now.strftime("%Y-%m")
         filename = now.strftime("%Y-%m-%d")
 
-        if self.stream is None:
-            self.stream = self._open()
-
         if self._year_month != year_month or self.filename != filename:
             return True
         if self.max_bytes > 0:

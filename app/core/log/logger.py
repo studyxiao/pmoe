@@ -4,7 +4,7 @@ import uuid
 
 import structlog
 from flask import Flask, Response, g, request
-from gunicorn.glogging import Logger as _GunicornLogger
+from gunicorn.glogging import Logger as _GunicornLogger  # type: ignore
 
 # 自定义 日志记录,不再使用 flask werkzeug gunicorn 等的日志记录
 # access_logger 每次请求都会记录
@@ -26,7 +26,7 @@ class Logger:
 
     def registe_log(self) -> None:
         @self.app.before_request
-        def log_request_before() -> None:
+        def log_request_before() -> None:  # type: ignore
             """在请求之前绑定上下文变量."""
             structlog.contextvars.clear_contextvars()
             request_id = str(uuid.uuid4())
@@ -36,7 +36,7 @@ class Logger:
             g.start_time = time.perf_counter_ns()
 
         @self.app.after_request
-        def log_request_after(response: Response) -> Response:
+        def log_request_after(response: Response) -> Response:  # type: ignore
             """在请求之后记录日志."""
             process_time = time.perf_counter_ns() - g.start_time if hasattr(g, "start_time") else -1
             http_method = request.method
@@ -44,7 +44,7 @@ class Logger:
             http_version = request.environ.get("SERVER_PROTOCOL")
             status_code = response.status_code
             remote_addr = request.remote_addr
-            message = f'{remote_addr} - "{http_method} {url} HTTP/{http_version}" {status_code}'
+            message = f'{remote_addr} - "{http_method} {url} {http_version}" {status_code}'
             access_logger.info(
                 message,
                 http={
@@ -58,7 +58,7 @@ class Logger:
             )
             return response
 
-        self.app.logger = error_logger
+        self.app.logger = error_logger  # type: ignore
 
 
 class GunicornLogger(_GunicornLogger):
@@ -67,7 +67,7 @@ class GunicornLogger(_GunicornLogger):
     >>> logger_class = "app.core.log.logger.GunicornLogger"
     """
 
-    def __init__(self, cfg):  # noqa
+    def __init__(self, cfg):  # noqa # type: ignore
         self.error_log = logging.getLogger("gunicorn.error")
         self.error_log.level = logging.INFO
 
@@ -75,5 +75,5 @@ class GunicornLogger(_GunicornLogger):
         self.access_log.level = logging.INFO
         self.cfg = cfg
 
-    def access(self, resp, req, environ, request_time):  # noqa
+    def access(self, resp, req, environ, request_time):  # noqa # type: ignore
         """不使用此处记录 access 日志."""

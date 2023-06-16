@@ -12,9 +12,14 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import timedelta
 from types import TracebackType
-from typing import Self
+from typing import TYPE_CHECKING, Optional, Self
 
 import redis
+
+if TYPE_CHECKING:
+    from redis import Redis
+
+    BaseRedis = Redis[bytes]
 
 
 class ServerError(Exception):
@@ -36,7 +41,7 @@ class Lock:
     key: str
     value: str = field(default_factory=lambda: str(uuid.uuid4()))
     expiration: timedelta = timedelta(seconds=60)
-    redis_client: redis.Redis | None = None
+    redis_client: Optional["BaseRedis"] = None
 
     def __post_init__(self) -> None:
         if self.redis_client is None:
@@ -46,7 +51,9 @@ class Lock:
         if expiration is not None:
             self.expiration = expiration
         try:
-            success = self.redis_client.set(self.key, self.value, nx=True, ex=self.expiration)
+            success = False
+            if self.redis_client is not None:
+                success = self.redis_client.set(self.key, self.value, nx=True, ex=self.expiration)
         except redis.exceptions.RedisError as e:
             # 网络问题或 redis 服务异常
             raise ServerError() from e
@@ -64,7 +71,7 @@ class Lock:
             end
         """
         try:
-            res = self.redis_client.eval(release_lock_script, 1, self.key, self.value)
+            res = self.redis_client.eval(release_lock_script, 1, self.key, self.value)  # type: ignore[union-attr]
         except redis.exceptions.RedisError as e:
             # 网络问题或 redis 服务异常
             raise ServerError() from e
@@ -92,7 +99,7 @@ class RenewLock:
     key: str
     value: str = field(default_factory=lambda: str(uuid.uuid4()))
     expiration: timedelta = timedelta(seconds=60)
-    redis_client: redis.Redis | None = None
+    redis_client: Optional["BaseRedis"] = None
     _lock: Lock = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -114,7 +121,7 @@ class RenewLock:
             end
         """
         try:
-            res = self.redis_client.eval(
+            res = self.redis_client.eval(  # type: ignore[union-attr]
                 renew_lock_script,
                 1,
                 self.key,
@@ -137,11 +144,11 @@ class RenewLock:
         expiration = expiration or self.expiration
         for _ in range(retry_times):
             try:
-                success = self._lock.acquire(expiration)
+                self._lock.acquire(expiration)
             except RedisLockError:
                 time.sleep(retry_interval)
             else:
-                return success
+                return True
         return False
 
     def acquire_with_renew(self, expiration: timedelta | None = None) -> bool:
@@ -216,7 +223,7 @@ if __name__ == "__main__":
     redis_client = redis.Redis.from_url("redis://:123456@localhost:6379/0")
 
     test_type = 2  # 1: 普通锁 2: 续约锁
-    if test_type == 1:
+    if test_type == 1:  # type: ignore[comparison-overlap]
         # 普通锁
         lock = Lock("test", redis_client=redis_client)
         try:

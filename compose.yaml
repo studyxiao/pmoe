@@ -54,7 +54,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: watchfiles --filter python 'celery -A task.app worker --loglevel=info'
+    stop_signal: SIGINT # 解决 Ctrl + C 传递给子进程问题
+    command: [ "/worker.sh" ]
     volumes:
       - ./app:/home/appuser/app
       - ./config:/home/appuser/config
@@ -84,25 +85,28 @@ services:
     build:
       context: .
       dockerfile: ./compose/web/Dockerfile
-    command: celery -A task.app flower --broker="${CELERY_BROKER_URL}"
+    command: [ "/flower.sh" ]
     volumes:
       - ./app:/home/appuser/app
       - ./config:/home/appuser/config
       - ./task:/home/appuser/task
+      - flower-db:/app/flower_db
     env_file:
       - .env
     ports:
-      - 5557:5555
+      - 5555:5555
     depends_on:
       - redis
       - db
+      - celery_worker
   nginx:
     build: ./compose/nginx
     ports:
-      - "8001:80"
+      - "8000:80"
     depends_on:
       - web
 volumes:
   db-data:
   redis-data:
   meili-data:
+  flower-db:

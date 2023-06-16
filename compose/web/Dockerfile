@@ -34,6 +34,7 @@ EOF
 # switch to non-root user
 RUN useradd -m -s /bin/bash -u 1000 appuser
 USER appuser
+RUN mkdir -p /home/appuser/flower_db
 WORKDIR /home/appuser
 
 # set environment variables
@@ -48,6 +49,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # copy shell script
 COPY --link --chown=appuser compose/web/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+COPY --link --chown=appuser compose/web/celery/worker/start.sh /worker.sh
+RUN chmod +x /worker.sh
+
+COPY --link --chown=appuser compose/web/celery/flower/start.sh /flower.sh
+RUN chmod +x /flower.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 

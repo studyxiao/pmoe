@@ -3,31 +3,32 @@
 name = ""
 version = ""
 description = ""
-authors = [
-    {name = "studyxiao", email = "studyxiao@163.com"},
-]
+authors = [{ name = "studyxiao", email = "studyxiao@163.com" }]
 dependencies = [
-    "flask>=2.3.2",
-    "python-dotenv>=1.0.0",
-    "redis>=4.5.5",
-    "celery>=5.3.0",
-    "sqlalchemy>=2.0.15",
-    "gunicorn>=20.1.0",
-    "gevent>=22.10.2",
-    "pyjwt>=2.7.0",
-    "pymysql>=1.0.3",
-    "pydantic>=1.10.9",
-    "structlog>=23.1.0",
-    "theine>=0.4.0",
+  "flask>=2.3.2",
+  "python-dotenv>=1.0.0",
+  "redis>=4.5.5",
+  "celery>=5.3.0",
+  "sqlalchemy>=2.0.15",
+  "gunicorn>=20.1.0",
+  "gevent>=22.10.2",
+  "pyjwt>=2.7.0",
+  "pymysql>=1.0.3",
+  "pydantic>=1.10.9",
+  "structlog>=23.1.0",
+  "theine>=0.4.0",
+  "flower>=1.2.0",
 ]
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "black>=23.3.0",
-    "ruff>=0.0.272",
-    "rich>=13.4.1",
+  "black>=23.3.0",
+  "ruff>=0.0.272",
+  "rich>=13.4.1",
+  "watchfiles>=0.19.0",
+  "celery-types>=0.17.0",
 ]
 
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
@@ -44,59 +45,58 @@ line-length = 120
 target-version = "py311"
 
 select = [
-    "A",   # flake8-builtins
-    "ANN",
-    "B",   # flake8-bugbear
-    "BLE", # flake8-blind-except
-    "C4",  # flake8-comprehensions
-    "C90", # mccabe
-    "D",   # pydocstyle
-    "DJ",  # flake8-django
-    "DTZ", # flake8-datetimez
-    "E",   # pycodestyle errors
-    "ERA", # eradicate
-    "EXE", # flake8-executable
-    "F",   # pyflakes
-    "G",   # flake8-logging-format
-    # "I",   # isort
-    "ICN", # flake8-import-conventions
-    "ISC", # flake8-implicit-str-concat
-    "N",   # pep8-naming
-    "PIE", # flake8-pie
-    "PLC", # pylint - convention
-    "PLE", # pylint - error
-    "PLW", # pylint - warning
-    "PT",
-    "PTH", # flake8-use-pathlib
-    "Q",   # flake8-quotes
-    "RET", # flake8-return
-    "RUF", # Ruff-specific rules
-    "S",   # flake8-bandit
-    "SIM", # flake8-simplify
-    "T10", # flake8-debugger
-    "T20", # flake8-print
-    "TCH", # flake8-type-checking
-    "TID", # flake8-tidy-imports
-    "UP",  # pyupgrade
-    "W",   # pycodestyle - warning
-    "YTT", # flake8-2020
+  "A",   # flake8-builtins
+  "ANN",
+  "B",   # flake8-bugbear
+  "BLE", # flake8-blind-except
+  "C4",  # flake8-comprehensions
+  "C90", # mccabe
+  "D",   # pydocstyle
+  "DJ",  # flake8-django
+  "DTZ", # flake8-datetimez
+  "E",   # pycodestyle errors
+  "ERA", # eradicate
+  "EXE", # flake8-executable
+  "F",   # pyflakes
+  "G",   # flake8-logging-format
+  # "I",   # isort
+  "ICN", # flake8-import-conventions
+  "ISC", # flake8-implicit-str-concat
+  "N",   # pep8-naming
+  "PIE", # flake8-pie
+  "PLC", # pylint - convention
+  "PLE", # pylint - error
+  "PLW", # pylint - warning
+  "PT",
+  "PTH", # flake8-use-pathlib
+  "Q",   # flake8-quotes
+  "RET", # flake8-return
+  "RUF", # Ruff-specific rules
+  "S",   # flake8-bandit
+  "SIM", # flake8-simplify
+  "T10", # flake8-debugger
+  "T20", # flake8-print
+  "TCH", # flake8-type-checking
+  "TID", # flake8-tidy-imports
+  "UP",  # pyupgrade
+  "W",   # pycodestyle - warning
+  "YTT", # flake8-2020
 ]
 ignore = [
-    "D100",   # pydocstyle - missing docstring in public module
-    "D101",   # pydocstyle - missing docstring in public class
-    "D102",   # pydocstyle - missing docstring in public method
-    "D103",   # pydocstyle - missing docstring in public function
-    "D104",   # pydocstyle - missing docstring in public package
-    "D105",   # pydocstyle - missing docstring in magic method
-    "D106",   # pydocstyle - missing docstring in public nested class
-    "D107",   # pydocstyle - missing docstring in __init__
-    'D211',
-    'D213',
-    'ANN101',
-    'ANN102',
-    'ANN401',
-    'N818',
-    'RUF200', # pyproject version
+  "D100",   # pydocstyle - missing docstring in public module
+  "D101",   # pydocstyle - missing docstring in public class
+  "D102",   # pydocstyle - missing docstring in public method
+  "D103",   # pydocstyle - missing docstring in public function
+  "D104",   # pydocstyle - missing docstring in public package
+  "D105",   # pydocstyle - missing docstring in magic method
+  "D106",   # pydocstyle - missing docstring in public nested class
+  "D107",   # pydocstyle - missing docstring in __init__
+  'D211',
+  'D213',
+  'ANN101',
+  'ANN102',
+  'ANN401',
+  'N818',
 ]
 respect-gitignore = true
 
@@ -112,3 +112,6 @@ builtins-ignorelist = ["id", "set"]
 
 [tool.ruff.mccabe]
 max-complexity = 15
+
+[tool.pyright]
+exclude = ["task.*"]

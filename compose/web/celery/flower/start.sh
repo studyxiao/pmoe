@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 
 worker_ready() {
-    celery -A app.app.celery_app inspect ping
+    celery -A task.app inspect ping
 }
 
 until worker_ready; do
@@ -12,9 +12,11 @@ until worker_ready; do
   sleep 1
 done
 >&2 echo 'Celery workers is available'
-
-exec celery -A app.app.celery_app \
-    --broker="${CELERY_BROKER_URL}" \
-    flower \
-    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}" \
-    --persistent=1 --db=/app/flower_db/flower.db  --state_save_interval=5000
+# task.app celery 实例
+exec celery -A task.app \
+    --broker=${CELERY_BROKER_URL} flower \
+    --basic_auth=${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD} \
+    --persistent=True \
+    --db=/home/appuser/flower_db/flower.db \
+    --state_save_interval=5000 \
+    --port=5555

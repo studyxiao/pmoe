@@ -12,5 +12,6 @@
   "files.exclude": {
     "**/__pycache__": true
   },
-  "python.analysis.typeCheckingMode": "strict"
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.autoImportCompletions": true
 }

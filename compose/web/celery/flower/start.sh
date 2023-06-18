@@ -13,8 +13,7 @@ until worker_ready; do
 done
 >&2 echo 'Celery workers is available'
 # task.app celery 实例
-exec celery -A task.app \
-    --broker=${CELERY_BROKER_URL} flower \
+exec celery -A task.app flower\
     --basic_auth=${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD} \
     --persistent=True \
     --db=/home/appuser/flower_db/flower.db \

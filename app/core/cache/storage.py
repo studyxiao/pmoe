@@ -1,9 +1,14 @@
 from collections.abc import Sequence
 from datetime import timedelta
-from typing import Any
+from typing import TYPE_CHECKING, Any, Union
 
-from redis import Redis, RedisCluster
 from theine import Cache
+
+if TYPE_CHECKING:
+    from redis import Redis, RedisCluster
+
+    BaseRedis = Redis[bytes]
+    BaseRedisCluster = RedisCluster[bytes]
 
 
 class BaseStorage:
@@ -41,7 +46,7 @@ class LocalStorage(BaseStorage):
     def get_all(self, keys: Sequence[str]) -> list[bytes | None]:
         if len(keys) == 0:
             return []
-        results = []
+        results: list[Any] = []
         for key in keys:
             v = self.client.get(key, None)
             results.append(v)
@@ -62,13 +67,13 @@ class LocalStorage(BaseStorage):
 
 
 class RedisStorage(BaseStorage):
-    def __init__(self, client: Redis | RedisCluster) -> None:
+    def __init__(self, client: Union["BaseRedis", "BaseRedisCluster"]) -> None:
         self.client = client
 
     def get(self, key: str) -> bytes | None:
         return self.client.get(key)
 
-    def get_all(self, keys: list[str]) -> dict[str, Any]:
+    def get_all(self, keys: Sequence[str]) -> list[bytes | None]:
         return self.client.mget(keys)
 
     def remove(self, key: str) -> None:

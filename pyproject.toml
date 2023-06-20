@@ -18,6 +18,7 @@ dependencies = [
   "structlog>=23.1.0",
   "theine>=0.4.0",
   "flower>=2.0.0",
+  "websockets>=11.0.3",
 ]
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -108,7 +109,7 @@ respect-gitignore = true
 convention = "google"
 
 [tool.ruff.flake8-builtins]
-builtins-ignorelist = ["id", "set"]
+builtins-ignorelist = ["id", "set", "type"]
 
 [tool.ruff.mccabe]
 max-complexity = 15

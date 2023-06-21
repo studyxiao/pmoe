@@ -42,12 +42,11 @@ services:
       - ENABLE_OVERCOMMIT_MEMORY=true
     restart: always
   meilisearch:
-    image: getmeili/meilisearch:v1.1
+    image: getmeili/meilisearch:v1.2
     ports:
       - "7700:7700"
-    environment:
-      - MEILI_MASTER_KEY=masterKey
-      - MEILI_NO_ANALYTICS=true
+    env_file:
+      - .env
     volumes:
       - meili-data:/meili_data
   celery_worker:

@@ -14,5 +14,5 @@ app.config_from_object(celery_config)
 app.conf.__signature__ = None
 # 设置默认 app 可以在其他模块中使用 shared_task 装饰器
 app.set_default()
-
+# TODO: delete
 import task.example  # noqa # type: ignore[import]

@@ -1,3 +1,7 @@
+"""websocket 服务端.
+
+TODO: 基于 webosocket再封装本地基于 contextvars 的管理对象,实现类似 flask 的 g 对象
+"""
 import asyncio
 import json
 import logging

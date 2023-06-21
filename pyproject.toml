@@ -27,22 +27,22 @@ license = { text = "MIT" }
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "black>=23.3.0",
-    "ruff>=0.0.274",
-    "rich>=13.4.2",
-    "watchfiles>=0.19.0",
-    "celery-types>=0.18.0",
-    "pre-commit>=3.3.3",
-    "commitizen>=1.0.0",
+  "black>=23.3.0",
+  "ruff>=0.0.274",
+  "rich>=13.4.2",
+  "watchfiles>=0.19.0",
+  "celery-types>=0.18.0",
+  "pre-commit>=3.3.3",
+  "commitizen>=1.0.0",
 ]
 
-# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
 doc = [
-    "mkdocs>=1.4.3",
-    "mkdocs-material>=9.1.16",
-    "mkdocstrings[python]>=0.22.0",
+  "mkdocs>=1.4.3",
+  "mkdocs-material>=9.1.16",
+  "mkdocstrings[python]>=0.22.0",
 ]
 [tool.black]
+# https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
 line-length = 120
 # required-version = "23.3.0"
 # 23.1.0 之后自动推断 python 版本
@@ -131,3 +131,4 @@ ignore = ["task"]                 # 禁止检查文件
 reportMissingTypeStubs = false    # 禁止报告缺少的类型存根文件
 reportUnknownMemberType = false   # 禁止报告未知成员类型
 reportUnknownVariableType = false # 禁止报告未知变量类型
+reportUnknownArgumentType = false # 禁止报告未知参数类型

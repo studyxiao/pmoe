@@ -33,7 +33,7 @@ from app.core.schema import validate
 from .model import User
 from .schema import LoginScheme
 
-current_user: ContextVar[User] = ContextVar("user")
+current_user: ContextVar[User | None] = ContextVar("user")
 """ 当前用户
 >>> user = current_user.get()
 还可以使用 proxy 封装以便直接使用 current_user
@@ -158,7 +158,7 @@ class Auth:
 
     def validate_credential(self, username: str, password: str, scope: str = "") -> dict[str, str]:
         """Authenticates the user and returns an access token."""
-        scopes = scope.split()  # noqa
+        scopes = scope.split()  # type: ignore # noqa
         user = self.user.validate_credential(username, password)
         if user is None:
             raise ParameterException(message="Invalid credentials")

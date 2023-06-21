@@ -24,7 +24,7 @@ class Storage(Protocol):
     def get(self, key: str) -> bytes | None:
         ...
 
-    def get_all(self, keys: Sequence[str]) -> list[bytes] | None:
+    def get_all(self, keys: Sequence[str]) -> list[bytes | None]:
         ...
 
     def set(

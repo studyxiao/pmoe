@@ -1,13 +1,28 @@
 import json
+import logging
 from pathlib import Path
 
 import meilisearch
 from meilisearch.errors import MeilisearchApiError
+from rich.logging import RichHandler
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(message)s",
+    datefmt="[%X]",
+    handlers=[
+        RichHandler(
+            rich_tracebacks=True,
+            markup=True,
+        )
+    ],
+)
+
 
 try:
     client = meilisearch.Client("http://localhost:7700", "master")
 except MeilisearchApiError as e:
-    print(e)
+    logging.error(e)
     raise
 
 
@@ -21,7 +36,7 @@ index.update_pagination_settings({"maxTotalHits": 500})  # 限制搜索结果的
 
 # 中文同义词 https://github.com/jaaack-wang/Chinese-Synonyms
 synon = Path(__file__).parent / "resource/synonyms.json"
-with synon.open() as f:
+with synon.open(mode="r") as f:
     res = json.load(f)
     index.update_synonyms(res)  # 同义词
 
@@ -37,7 +52,7 @@ index.update_ranking_rules(
 )
 # 查看设置
 settings = index.get_settings()
-print(settings)
+logging.info(settings)
 
 documents = [
     {"id": 1, "title": "Carol", "genres": ["Romance", "Drama"]},
@@ -58,10 +73,10 @@ task = index.add_documents(documents)
 while (status := client.get_task(task.task_uid).status) != "succeeded":
     import time
 
-    print(status)
-    print("waiting for indexation")
+    logging.info(status)
+    logging.info("waiting for indexation")
     time.sleep(1)
-print("indexation done")
+logging.info("indexation done")
 
 # 查询
 # https://www.meilisearch.com/docs/reference/api/search#search-parameters
@@ -80,7 +95,7 @@ res = index.search(
         "sort": ["title:desc"],  # 排序,必须是可排序的属性
     },
 )  # 具有容错能力 carol
-print(res)
+logging.info(res)
 
 # 删除
 index.delete_document(1)  # 删除指定的文档

@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from datetime import timedelta
 from typing import TYPE_CHECKING, Any, Union
 
-from theine import Cache
+from theine.thenie import Cache
 
 if TYPE_CHECKING:
     from redis import Redis, RedisCluster

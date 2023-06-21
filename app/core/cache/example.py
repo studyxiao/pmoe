@@ -6,7 +6,7 @@
 4. 定义缓存 key (Node):包括缓存后端和缓存过期时间
 5. 使用缓存
 """
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
 from datetime import timedelta
 
 from pydantic import BaseModel
@@ -36,7 +36,7 @@ class UserInfo(BaseModel):
 
 # 4. 定义缓存 key (Node)
 class UserNode(Node[UserInfo]):
-    storages = [
+    storages = [  # noqa: RUF012
         {"storage": "redis", "ttl": timedelta(seconds=120)},
     ]
 
@@ -44,7 +44,7 @@ class UserNode(Node[UserInfo]):
         self.user_id = user_id
 
     def key(self) -> str:
-        return self.user_id
+        return str(self.user_id)
 
     def load(self) -> UserInfo:
         return UserInfo(id=self.user_id, name="test", age=18)
@@ -55,11 +55,11 @@ if __name__ == "__main__":
     # 5. 使用缓存
     cache.get(node)
     with ThreadPoolExecutor(max_workers=100) as executor:
-        tasks = []
+        tasks: list[Future[UserInfo | None]] = []
         for _ in range(100):
             task = executor.submit(cache.get, node)
             tasks.append(task)
         for task in as_completed(tasks):
             result = task.result()
-            print(result)  # noqa
+            print(result)  # noqa: T201
     cache.remove(node, "redis")

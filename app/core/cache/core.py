@@ -1,6 +1,6 @@
 from datetime import timedelta
 from threading import Lock
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, ClassVar, TypeVar
 
 from app.core.cache import serializer
 
@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 class _Locker:
     lock: Lock = Lock()
-    result: T | None = None
+    result: Any = None
 
 
 test_set = set()
@@ -21,13 +21,13 @@ test_set = set()
 class Manager:
     serializer: "Serializer" = serializer.JSONSerializer()
     # TODO 应区分本地和远程后端,本地后端不需要序列化和加锁操作
-    all_storages: dict[str, "Storage"] = {}
-    _awaiting: dict[str, _Locker] = {}  #  Thundering Herd Protection
+    all_storages: ClassVar[dict[str, "Storage"]] = {}
+    _awaiting: ClassVar[dict[str, _Locker]] = {}  #  Thundering Herd Protection
 
     def register_storage(self, name: "STORAGE_NAME", storage: "Storage") -> None:
         self.all_storages[name] = storage
 
-    def get(self, node: "Node[T]") -> T:
+    def get(self, node: "Node[T]") -> T | None:
         result: T | None = None
         miss_storages: list["Storage"] = []
         ttl: dict[str, timedelta] = {}
@@ -79,11 +79,11 @@ class Manager:
         ttl = self.get_storage_ttl(node, storage_name)
         storage.set(node.full_key(), self.serializer.dumps(value), ttl)
 
-    def remove(self, node: "Node[T]", storage_name: str) -> None:
+    def remove(self, node: "Node[Any]", storage_name: str) -> None:
         storage = self.all_storages[storage_name]
         storage.remove(node.full_key())
 
-    def get_ttl_from_node(self, node: "Node[T]") -> dict[str, timedelta]:
+    def get_ttl_from_node(self, node: "Node[Any]") -> dict[str, timedelta]:
         ttl: dict[str, timedelta] = {}
         defaul_ttl = timedelta(seconds=120)
         for storage in node.storages:
@@ -98,6 +98,6 @@ class Manager:
                 continue
         return ttl
 
-    def get_storage_ttl(self, node: "Node[T]", storage_name: str) -> timedelta:
+    def get_storage_ttl(self, node: "Node[Any]", storage_name: str) -> timedelta:
         ttl = self.get_ttl_from_node(node)
         return ttl.get(storage_name) or timedelta(seconds=120)

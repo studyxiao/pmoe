@@ -26,7 +26,7 @@ class DB:
             raise ValueError("DB_URL must be set")
         connect_args = {"check_same_thread": False} if "sqlite" in db_url else {}
         self.engine = create_engine(
-            db_url,
+            url=db_url,  # type: ignore[reportUnknownArgumentType]
             connect_args=connect_args,
             pool_size=app.config.get("DB_POOL_SIZE"),
             pool_recycle=7200,

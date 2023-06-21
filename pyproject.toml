@@ -5,21 +5,22 @@ version = ""
 description = ""
 authors = [{ name = "studyxiao", email = "studyxiao@163.com" }]
 dependencies = [
-    "flask>=2.3.2",
-    "python-dotenv>=1.0.0",
-    "redis>=4.5.5",
-    "celery>=5.3.1",
-    "sqlalchemy>=2.0.16",
-    "gunicorn>=20.1.0",
-    "gevent>=22.10.2",
-    "pyjwt>=2.7.0",
-    "pymysql>=1.0.3",
-    "pydantic>=1.10.9",
-    "structlog>=23.1.0",
-    "theine>=0.4.0",
-    "flower>=2.0.0",
-    "websockets>=11.0.3",
-    "meilisearch>=0.28.0",
+  "flask>=2.3.2",
+  "python-dotenv>=1.0.0",
+  "redis>=4.5.5",
+  "celery>=5.3.1",
+  "sqlalchemy>=2.0.16",
+  "gunicorn>=20.1.0",
+  "gevent>=22.10.2",
+  "pyjwt>=2.7.0",
+  "pymysql>=1.0.3",
+  "pydantic>=1.10.9",
+  "structlog>=23.1.0",
+  "theine>=0.4.0",
+  "flower>=2.0.0",
+  "websockets>=11.0.3",
+  "meilisearch>=0.28.0",
+  "tencentcloud-sdk-python>=3.0.919",
 ]
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -116,4 +117,8 @@ builtins-ignorelist = ["id", "set", "type"]
 max-complexity = 15
 
 [tool.pyright]
-exclude = ["task.*"]
+# https://github.com/microsoft/pyright/blob/main/docs/configuration.md#sample-pyprojecttoml-file
+ignore = ["task"]                 # 禁止检查文件
+reportMissingTypeStubs = false    # 禁止报告缺少的类型存根文件
+reportUnknownMemberType = false   # 禁止报告未知成员类型
+reportUnknownVariableType = false # 禁止报告未知变量类型

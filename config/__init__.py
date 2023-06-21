@@ -112,7 +112,12 @@ class BaseConfig(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRES_DELTA: timedelta = timedelta(hours=2)
 
-    # redis
+    # 腾讯 sms
+    SMS_SECRET_ID: str
+    SMS_SECRET_KEY: str
+    SMS_APP_ID: str
+    SMS_SIGN_NAME: str
+    SMS_TEMPLATE: str
 
     class Config(BaseSettings.Config):
         env_file: str = ".env"

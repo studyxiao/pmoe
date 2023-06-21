@@ -12,6 +12,8 @@ services:
       - ./app:/home/appuser/app
       - ./config:/home/appuser/config
       - ./task:/home/appuser/task
+      - ./search:/home/appuser/search
+      - ./sms:/home/appuser/sms
     env_file:
       - ./.env
     depends_on:
@@ -59,6 +61,8 @@ services:
       - ./app:/home/appuser/app
       - ./config:/home/appuser/config
       - ./task:/home/appuser/task
+      - ./search:/home/appuser/search
+      - ./sms:/home/appuser/sms
     env_file:
       - .env
     depends_on:
@@ -74,6 +78,8 @@ services:
       - ./app:/home/appuser/app
       - ./config:/home/appuser/config
       - ./task:/home/appuser/task
+      - ./search:/home/appuser/search
+      - ./sms:/home/appuser/sms
     env_file:
       - .env
     depends_on:
@@ -90,6 +96,8 @@ services:
       - ./config:/home/appuser/config
       - ./task:/home/appuser/task
       - flower-db:/app/flower_db
+      - ./search:/home/appuser/search
+      - ./sms:/home/appuser/sms
     env_file:
       - .env
     ports:

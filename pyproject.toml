@@ -37,6 +37,11 @@ dev = [
 ]
 
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
+doc = [
+    "mkdocs>=1.4.3",
+    "mkdocs-material>=9.1.16",
+    "mkdocstrings[python]>=0.22.0",
+]
 [tool.black]
 line-length = 120
 # required-version = "23.3.0"

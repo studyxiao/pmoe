@@ -2,12 +2,22 @@ name: CI
 on:
   push:
     branches: [ main ]
+  # 允许手动触发
+  workflow_dispatch:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        pdm-version: ["2.4.2"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check by pre-commit
+        uses: pre-commit/action@v3.0.0

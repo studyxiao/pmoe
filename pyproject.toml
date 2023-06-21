@@ -27,12 +27,13 @@ license = { text = "MIT" }
 
 [tool.pdm.dev-dependencies]
 dev = [
-  "black>=23.3.0",
-  "ruff>=0.0.274",
-  "rich>=13.4.2",
-  "watchfiles>=0.19.0",
-  "celery-types>=0.18.0",
-  "pre-commit>=3.3.3",
+    "black>=23.3.0",
+    "ruff>=0.0.274",
+    "rich>=13.4.2",
+    "watchfiles>=0.19.0",
+    "celery-types>=0.18.0",
+    "pre-commit>=3.3.3",
+    "commitizen>=1.0.0",
 ]
 
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options

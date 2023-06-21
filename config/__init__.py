@@ -61,26 +61,30 @@ class TaskConfig(BaseSettings):
     broker_url: str = Field(default="redis://localhost:6379/0", env="CELERY_BROKER_URL")
     # 消息代理的可见性超时时间为15分钟,超时后任务会被重新分配
     # 耗时任务不能超过15分钟,延迟任务也不能超过15分钟
-    broker_transport_options = {"visibility_timeout": 900}
+    broker_transport_options: dict[str, Any] = Field(
+        default_factory=lambda: {
+            "visibility_timeout": 60 * 15,
+        }
+    )
     # gevent 下设置 broker_pool 为 None ,禁止为每个 worker 创建连接
-    broker_pool_limit = 0
-    broker_connection_retry_on_startup = True
+    broker_pool_limit: int = 0
+    broker_connection_retry_on_startup: bool = True
 
     #### worker
     # worker 接受的内容类型
-    accept_content = ["json"]
+    accept_content: list[str] = Field(default_factory=lambda: ["json"])
     # worker 进程预取任务的数量(默认是4)
-    worker_prefetch_multiplier = 1
+    worker_prefetch_multiplier: int = 1
     #  worker 执行最大任务数,之后替换为新的进程
-    worker_max_tasks_per_child = 500
+    worker_max_tasks_per_child: int = 500
     # 内存使用超过内存量(KB)后,替换为新的 worke
-    worker_max_memory_per_child = 5000
+    worker_max_memory_per_child: int = 5000
 
     #### result
-    result_serializer = "json"
+    result_serializer: str = "json"
     result_backend: str = Field(default="redis://localhost:6379/0", env="CELERY_RESULT_BACKEND")
     # 任务结果保存3天
-    result_expires = timedelta(days=3)
+    result_expires: timedelta = timedelta(days=3)
 
     class Config(BaseSettings.Config):
         env_file: str = ".env"
@@ -118,6 +122,12 @@ class BaseConfig(BaseSettings):
     SMS_APP_ID: str
     SMS_SIGN_NAME: str
     SMS_TEMPLATE: str
+
+    # 腾讯 cos 设置
+    COS_SECRET_ID: str
+    COS_SECRET_KEY: str
+    COS_BUCKET: str
+    COS_REGION: str
 
     class Config(BaseSettings.Config):
         env_file: str = ".env"

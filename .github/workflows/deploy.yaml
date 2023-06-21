@@ -1,0 +1,46 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  deploy:
+    strategy:
+      matrix:
+        python-version:
+          - 3.11
+        pdm-version:
+          - 2.7.4
+        os:
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up PDM (with Python)
+        uses: pdm-project/setup-pdm@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          version: ${{ matrix.pdm-version }}
+      - name: Install dependencies
+        run: pdm sync -d -G doc
+      - name: Build Site
+        run: pdm run mkdocs build
+      - name: Enable Pages App
+        uses: actions/configure-pages@v2
+      - name: Packaging and Uploading to Stage
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist
+      - name: Deploy from Stage
+        id: deployment
+        uses: actions/deploy-pages@v1

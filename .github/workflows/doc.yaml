@@ -40,7 +40,7 @@ jobs:
       - name: Packaging and Uploading to Stage
         uses: actions/upload-pages-artifact@v1
         with:
-          path: dist
+          path: site
       - name: Deploy from Stage
         id: deployment
         uses: actions/deploy-pages@v1

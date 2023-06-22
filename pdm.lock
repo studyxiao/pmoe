@@ -659,7 +659,7 @@ summary = "Structured Logging for Python"
 
 [[package]]
 name = "tencentcloud-sdk-python"
-version = "3.0.919"
+version = "3.0.920"
 summary = "Tencent Cloud SDK for Python"
 dependencies = [
     "requests<=2.28.0,>=2.27.0",
@@ -1542,9 +1542,9 @@ content_hash = "sha256:6f6c7eb85376a8852adf6e26d180850858b7465f112bc19c54ea75f2c
     {url = "https://files.pythonhosted.org/packages/0c/b2/0c0951c78f3f59ce44e93cb9b2140d305a00bb8262532041c702d4d4300a/structlog-23.1.0-py3-none-any.whl", hash = "sha256:79b9e68e48b54e373441e130fa447944e6f87a05b35de23138e475c05d0f7e0e"},
     {url = "https://files.pythonhosted.org/packages/9e/c4/688d14600f3a8afa31816ac95220f2548648e292c3ff2262057aa51ac2fb/structlog-23.1.0.tar.gz", hash = "sha256:270d681dd7d163c11ba500bc914b2472d2b50a8ef00faa999ded5ff83a2f906b"},
 ]
-"tencentcloud-sdk-python 3.0.919" = [
-    {url = "https://files.pythonhosted.org/packages/1f/3f/8c19b671ddfb4b2e263fb49c251b8e6b89e4a32c748736a4e0fcc0d2c3fc/tencentcloud-sdk-python-3.0.919.tar.gz", hash = "sha256:6850bca3a026d0b2655651b39e2ce23040896b33cb946a50847e6bec49af393d"},
-    {url = "https://files.pythonhosted.org/packages/c1/25/bcfdbb9547aa6276ef63743bd57879d07a1aece26249af46ab3b199cb033/tencentcloud_sdk_python-3.0.919-py2.py3-none-any.whl", hash = "sha256:eade0d3f02e3c422f6a967c4a4833725290e5745fa87e3ceabf7c5d3a73d67ac"},
+"tencentcloud-sdk-python 3.0.920" = [
+    {url = "https://files.pythonhosted.org/packages/38/fb/965012f39348ad3181c983a3f36b99986ec2c0df58611173271878c00a32/tencentcloud_sdk_python-3.0.920-py2.py3-none-any.whl", hash = "sha256:39eeb08fcbbea2d3438150f858c39daccab93bd0add2267294aeee65f7ac3bfd"},
+    {url = "https://files.pythonhosted.org/packages/3f/29/e630e68474cf573e645d24c169394e752a4a3b9d7307fb97ad6b628a50ad/tencentcloud-sdk-python-3.0.920.tar.gz", hash = "sha256:ae2afc8a6cecc33e5082e22e293d65654ab6e1334e9446ae9a84a042c0e8557a"},
 ]
 "theine 0.4.0" = [
     {url = "https://files.pythonhosted.org/packages/45/14/79368ddc92bb82b9bbe5ce4d2b6a291c97a989ad1800b27be3df672e8686/theine-0.4.0.tar.gz", hash = "sha256:47edf739b527be1cf5d5125025c7a93c4c23727da4828c515a4812b2298824eb"},

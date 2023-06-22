@@ -4,6 +4,14 @@
 
 开箱即用的 flask + Gunicorn + Nginx + Docker Web Application 开发、部署方案。满足 12 factor 指导原则和 CI/CD 开发流程。
 
+## Port
+
+- web: 8000
+- mysql: 3306
+- redis: 6379
+- meilisearch: 7700
+- celery_flower: 5555
+- nginx: 8000
 
 ## Checklists
 

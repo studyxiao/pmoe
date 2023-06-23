@@ -41,6 +41,10 @@ doc = [
   "mkdocs-material>=9.1.16",
   "mkdocstrings[python]>=0.22.0",
 ]
+
+[tool.pdm.scripts]
+doc = "mkdocs serve"
+
 [tool.black]
 # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#command-line-options
 line-length = 120
@@ -122,6 +126,7 @@ builtins-ignorelist = ["id", "set", "type"]
 
 [tool.ruff.mccabe]
 max-complexity = 15
+
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md#sample-pyprojecttoml-file

@@ -1,4 +1,60 @@
-site_name: PMoe
+site_name: P-Moe
+
+repo_url: https://github.com/studyxiao/pmoe
+repo_name: studyxiao/pmoe
 
 theme:
   name: "material"
+  logo: ""
+  language: zh
+  palette:
+    - scheme: default
+      primary: green
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate
+      primary: green
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  features:
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  plugins:
+    - mkdocstrings:
+        handlers:
+          python:
+            options:
+              docstring_style: google
+    - search:
+        lang:
+          - en
+        separator: '[\s\u200b\-]'
+    - glightbox
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+      anchor_linenums: true
+      auto_title: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji
+  - toc:
+      permalink: "#"

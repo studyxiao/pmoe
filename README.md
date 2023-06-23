@@ -19,3 +19,12 @@
   - [ ] dependencies version
   - [ ] [tool.black] required-version
   - [ ] [tool.ruff] required-version
+
+
+## 运行
+
+```sh
+# 本地运行文档
+pdm doc
+# or pdm run doc or pdm run mkdocs serve
+```

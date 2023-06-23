@@ -27,6 +27,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
       - ./compose/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./compose/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - .env
     restart: always

@@ -34,7 +34,7 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
 
     __tablename__ = TableNamer()
 
-    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, init=False)
 
     def change(self, data: dict[str, Any]) -> None:
         for key, value in data.items():

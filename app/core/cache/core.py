@@ -27,7 +27,7 @@ class Manager:
     def register_storage(self, name: "STORAGE_NAME", storage: "Storage") -> None:
         self.all_storages[name] = storage
 
-    def get(self, node: "Node[T]") -> T | None:
+    def get(self, node: "Node[T]", load: bool = True) -> T | None:
         result: T | None = None
         miss_storages: list["Storage"] = []
         ttl: dict[str, timedelta] = {}
@@ -58,7 +58,9 @@ class Manager:
                         if result is not None:
                             # 该存储后端有缓存,记录在result中
                             break
-
+                if not load:
+                    # 不需要从数据库加载,直接返回
+                    return result
                 if result is None:
                     # 没有缓存,从数据库中加载
 

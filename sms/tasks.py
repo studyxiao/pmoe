@@ -1,16 +1,17 @@
 from datetime import timedelta
 
-from celery import shared_task
+# 听听  from celery import shared_task
+from sms.app import SMS, SMSServiceError
+from task.app import app
 
-from sms.app import SMS
 
-
-@shared_task(
+@app.task(
     name="sms:send_sms",
-    autoretry_for=(Exception,),
+    autoretry_for=(SMSServiceError,),
     retry_backoff=True,
     retry_jitter=True,
     max_retries=5,
 )
-def send_sms(mobile: str, code: str, expire: timedelta) -> None:
-    SMS.send(mobile, code, expire)
+def send_sms(mobile: str, code: str, expire: int) -> None:
+    _expire = timedelta(seconds=expire)
+    SMS.send(mobile, code, _expire)

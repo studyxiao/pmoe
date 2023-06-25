@@ -11,6 +11,10 @@ from config import config
 logger: BoundLogger = getLogger("sms")
 
 
+class SMSServiceError(Exception):
+    """服务异常."""
+
+
 class SMS:
     """腾讯云短信服务.
 
@@ -54,7 +58,7 @@ class SMS:
                 "RequestId": "xxxx"
             }
         """
-        _expire = str(expire.total_seconds() / 60)  # 传入的是 timedelta 转换成分钟字符串
+        _expire = str(int(expire.total_seconds() / 60))  # 传入的是 timedelta 转换成分钟字符串
         data = [code, _expire]
         cls.request.PhoneNumberSet = [phone]
         cls.request.TemplateParamSet = data
@@ -63,7 +67,21 @@ class SMS:
             if resp.SendStatusSet is None or len(resp.SendStatusSet) == 0:
                 return False
             res_code = resp.SendStatusSet[0].Code
-            return res_code == "Ok"  # type: ignore
+            if res_code == "Ok":
+                logger.info("发送短信成功: %s %s %s", phone, code, _expire)
+            elif res_code == "LimitExceeded.PhoneNumberDailyLimit":
+                logger.error("发送短信失败: %s %s %s", phone, code, _expire)
+                raise Exception("短信发送超过每日限制")
+            elif res_code == "InvalidParameterValue.PhoneNumberInvalidFormat":
+                logger.error("发送短信失败: %s %s %s", phone, code, _expire)
+                raise Exception("手机号格式错误")
+            elif res_code == "InvalidParameterValue.TemplateParameterFormatError":
+                logger.error("发送短信失败: %s %s %s", phone, code, _expire)
+                raise Exception("模板参数格式错误")
+            else:
+                logger.error("发送短信失败: %s %s %s, error: %s", phone, code, _expire, res_code)
+                raise Exception("短信发送失败")
+            return True
         except TencentCloudSDKException as e:
             logger.error(str(e))
-            raise Exception(f"短信服务异常: {e}") from None
+            raise SMSServiceError(f"短信服务异常: {e}") from None

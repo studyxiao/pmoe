@@ -94,6 +94,7 @@ class BaseConfig(BaseSettings):
     BASE_DIR: Path | str = Path(__file__).parent.parent
 
     SECRET_KEY: str = "123456"
+    WEB_PORT: int = 5000
 
     # JWT
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=2)

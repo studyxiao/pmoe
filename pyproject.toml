@@ -111,6 +111,7 @@ ignore = [
   'ANN102',
   'ANN401',
   'N818',
+  'N805',   # cls 关键字
 ]
 respect-gitignore = true
 

@@ -9,7 +9,7 @@ RUN <<EOF
 EOF
 
 # activate virtual environment
-ENV VIRTUAL_ENV=/home/appuser/.venv
+ENV VIRTUAL_ENV=/.venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
@@ -35,15 +35,15 @@ EOF
 RUN useradd -m -s /bin/bash -u 1000 appuser
 USER appuser
 RUN mkdir -p /home/appuser/flower_db
-WORKDIR /home/appuser
+WORKDIR /home/appuser/app
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # activate virtual environment
-COPY --link --from=builder /home/appuser/.venv /home/appuser/.venv
-ENV VIRTUAL_ENV=/home/appuser/.venv
+COPY --link --from=builder /.venv /.venv
+ENV VIRTUAL_ENV=/.venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # copy shell script
@@ -58,4 +58,4 @@ RUN chmod +x /flower.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-# CMD ["flask", "run", "--host","0.0.0.0", "--port", "8000"]
+# CMD ["flask", "run", "--host","0.0.0.0", "--port", "5000"]

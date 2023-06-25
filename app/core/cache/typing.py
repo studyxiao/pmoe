@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from datetime import datetime, timedelta
 from typing import Any, Literal, NamedTuple, Protocol, Self, TypedDict, TypeVar
 
-R = TypeVar("R")
+R = TypeVar("R", covariant=True)
 
 STORAGE_NAME = Literal["local", "redis"]
 
@@ -63,9 +63,9 @@ class Node(Protocol[R]):
     def full_key(self) -> str:
         ...
 
-    def load(self) -> R:
+    def load(self) -> R | None:
         ...
 
     @classmethod
-    def load_all(cls, nodes: Sequence[Self]) -> list[R]:
+    def load_all(cls, nodes: Sequence[Self]) -> list[R | None]:
         ...

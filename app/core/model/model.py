@@ -56,10 +56,10 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
             return session.get(cls, id)
 
     @classmethod
-    def get_by_attr(cls, **kwargs: Any) -> Self | None:
+    def get_by_attr(cls, *args: Any, **kwargs: Any) -> Self | None:
         """根据属性获得 row."""
         with session:
-            return session.scalars(select(cls).filter_by(**kwargs)).first()
+            return session.scalars(select(cls).where(*args).filter_by(**kwargs)).first()
 
     @classmethod
     def get_all(cls, page: int = 0, count: int = 10, **kwargs: Any) -> Sequence[Self]:

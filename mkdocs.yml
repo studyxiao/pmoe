@@ -40,6 +40,7 @@ theme:
           - en
         separator: '[\s\u200b\-]'
     - glightbox
+
 markdown_extensions:
   - admonition
   - pymdownx.details

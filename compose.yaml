@@ -5,15 +5,11 @@ services:
       dockerfile: ./compose/web/Dockerfile
     command: gunicorn app.app:app -c config/gunicorn.py
     # ports:
-    #   - "8000:8000"
+    #   - "5000:${WEB_PORT}"
     expose:
-      - 8000
+      - ${WEB_PORT}
     volumes:
-      - ./app:/home/appuser/app
-      - ./config:/home/appuser/config
-      - ./task:/home/appuser/task
-      - ./search:/home/appuser/search
-      - ./sms:/home/appuser/sms
+      - ./:/home/appuser/app/
     env_file:
       - ./.env
     depends_on:
@@ -59,11 +55,7 @@ services:
     stop_signal: SIGINT # 解决 Ctrl + C 传递给子进程问题
     command: [ "/worker.sh" ]
     volumes:
-      - ./app:/home/appuser/app
-      - ./config:/home/appuser/config
-      - ./task:/home/appuser/task
-      - ./search:/home/appuser/search
-      - ./sms:/home/appuser/sms
+      - ./:/home/appuser/app/
     env_file:
       - .env
     depends_on:
@@ -76,11 +68,7 @@ services:
       dockerfile: ./compose/web/Dockerfile
     command: celery -A task.app beat -l info
     volumes:
-      - ./app:/home/appuser/app
-      - ./config:/home/appuser/config
-      - ./task:/home/appuser/task
-      - ./search:/home/appuser/search
-      - ./sms:/home/appuser/sms
+      - ./:/home/appuser/app/
     env_file:
       - .env
     depends_on:
@@ -93,12 +81,7 @@ services:
       dockerfile: ./compose/web/Dockerfile
     command: [ "/flower.sh" ]
     volumes:
-      - ./app:/home/appuser/app
-      - ./config:/home/appuser/config
-      - ./task:/home/appuser/task
-      - flower-db:/app/flower_db
-      - ./search:/home/appuser/search
-      - ./sms:/home/appuser/sms
+      - ./:/home/appuser/app/
     env_file:
       - .env
     ports:

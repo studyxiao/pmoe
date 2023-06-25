@@ -779,7 +779,7 @@ dependencies = [
 lock_version = "4.2"
 cross_platform = true
 groups = ["default", "dev", "doc"]
-content_hash = "sha256:2a54c58e3a3b6aa2bbcd0968430b1127a317ba83b715b4003a51fb3e37350718"
+content_hash = "sha256:3757e79343810a72160ea1e4f33cf5c837d7ab9b2b7d5592bf350cec324de568"
 
 [metadata.files]
 "amqp 5.1.1" = [

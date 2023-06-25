@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from structlog import getLogger
 from structlog.stdlib import BoundLogger
 from tencentcloud.common import credential
@@ -25,7 +27,7 @@ class SMS:
     request.TemplateId = config.SMS_TEMPLATE
 
     @classmethod
-    def send(cls, phone: str, code: str, expire: int | None = None) -> bool:
+    def send(cls, phone: str, code: str, expire: timedelta) -> bool:
         """发送短信.
 
         Args:
@@ -52,11 +54,7 @@ class SMS:
                 "RequestId": "xxxx"
             }
         """
-        _expire = ""
-        if expire is None:
-            _expire = "5"  # 默认5分钟
-        if isinstance(expire, int):
-            _expire = str(int(expire / 60))  # 传入的是秒转换成分钟
+        _expire = str(expire.total_seconds() / 60)  # 传入的是 timedelta 转换成分钟字符串
         data = [code, _expire]
         cls.request.PhoneNumberSet = [phone]
         cls.request.TemplateParamSet = data

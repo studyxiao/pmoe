@@ -95,3 +95,9 @@ class Forbidden(APIException):
     status_code: int = 403
     message: str = "Forbidden"
     error_code: int = 1003
+
+
+class ServerError(APIException):
+    status_code: int = 500
+    message: str = "Server Error"
+    error_code: int = 9999

@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from celery import shared_task
 
 from sms.app import SMS
@@ -10,5 +12,5 @@ from sms.app import SMS
     retry_jitter=True,
     max_retries=5,
 )
-def send_sms(mobile: str, code: str, expire: int | None = None) -> None:
+def send_sms(mobile: str, code: str, expire: timedelta) -> None:
     SMS.send(mobile, code, expire)

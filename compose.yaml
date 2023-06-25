@@ -96,6 +96,7 @@ services:
       - "8000:80"
     depends_on:
       - web
+    stop_grace_period: 3s # 解决 Ctrl + C 传递给子进程等待时间问题
 volumes:
   db-data:
   redis-data:

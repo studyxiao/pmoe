@@ -6,7 +6,7 @@
 
 ## Port
 
-- web: 8000
+- web: 5000
 - mysql: 3306
 - redis: 6379
 - meilisearch: 7700

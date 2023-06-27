@@ -102,8 +102,18 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
         """
         return delete(cls)
 
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+    def to_dict(self, exclude_field: set[str] | None = None) -> dict[str, Any]:
+        self.__exclude_field = exclude_field or set()
+        return asdict(self, dict_factory=self.dict_factory)
+
+    def dict_factory(self, items: list[tuple[str, Any]]) -> dict[str, Any]:
+        result = {}
+        for item in items:
+            key, value = item
+            if self.__exclude_field and key in self.__exclude_field:
+                continue
+            result[key] = value
+        return result
 
 
 # custom type alias

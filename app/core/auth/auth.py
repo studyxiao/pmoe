@@ -121,8 +121,8 @@ class Auth:
 
     def before_request(self) -> None:
         user = self.identify(silent=True)
-        if user is not None:
-            self.current_user_token = current_user.set(user)
+        # user 为 None 时也设置,以便在视图函数中使用
+        self.current_user_token = current_user.set(user)
 
     def after_request(self, response: Response) -> Response:
         if hasattr(self, "current_user_token") and self.current_user_token:
@@ -150,7 +150,7 @@ class Auth:
             algorithm=self.app.config.get("JWT_ALGORITHM"),
         )
         user = self.user.get_by_id(data["user_id"])
-        if user is None:
+        if user is None or user.is_deleted:
             if silent:
                 return None
             raise ParameterException(message="Invalid user")

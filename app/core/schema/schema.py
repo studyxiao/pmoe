@@ -31,12 +31,16 @@ def validate(func: Callable[P, R]) -> Callable[P, R]:
         # TODO 暂未实现 annotations.get("form")
 
         if query_schema is not None:
+            if not isinstance(query_schema, type) or not issubclass(query_schema, BaseModel):
+                raise Exception("query_schema must be a subclass of BaseModel")
             try:
                 data = query_schema.validate(request.args.to_dict())
                 kwargs["query"] = data
             except ValidationError as e:
                 raise ParameterException(errors=e.errors()) from None
         if body_schema is not None:
+            if not isinstance(body_schema, type) or not issubclass(body_schema, BaseModel):
+                raise Exception("body_schema must be a subclass of BaseModel")
             try:
                 data = body_schema.validate(request.get_json())
                 kwargs["body"] = data

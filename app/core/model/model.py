@@ -93,6 +93,11 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
         """
         return update(cls)
 
+    def update_by_self(self, data: dict[str, Any]) -> Self:
+        """修改时保存到数据库中."""
+        self.change(data)
+        return self.save()
+
     @classmethod
     def delete(cls) -> "Delete":
         """Create a delete statement on this model.

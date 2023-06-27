@@ -1,5 +1,4 @@
 import re
-from collections.abc import Sequence
 from dataclasses import asdict
 from datetime import datetime
 from typing import TYPE_CHECKING, Annotated, Any, Self
@@ -62,16 +61,16 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
             return session.scalars(select(cls).where(*args).filter_by(**kwargs)).first()
 
     @classmethod
-    def get_all(cls, page: int = 0, count: int = 10, **kwargs: Any) -> Sequence[Self]:
+    def get_all(cls, page: int = 0, count: int = 10, *args: Any, **kwargs: Any) -> list[Self]:
         with session:
-            statement = select(cls).filter_by(**kwargs).offset(page * count).limit(count)
-            return session.scalars(statement).all()
+            statement = select(cls).where(*args).filter_by(**kwargs).offset(page * count).limit(count)
+            return list(session.scalars(statement).all())
 
     @classmethod
-    def count(cls, **kwargs: Any) -> int:
+    def count(cls, *args: Any, **kwargs: Any) -> int:
         """根据条件统计数量."""
         with session:
-            statement = select(func.count(cls.id)).filter_by(**kwargs)
+            statement = select(func.count(cls.id)).where(*args).filter_by(**kwargs)
             result = session.execute(statement)
             return result.scalar() or 0
 
@@ -109,7 +108,12 @@ class BaseModel(MappedAsDataclass, DeclarativeBase):
 
     def to_dict(self, exclude_field: set[str] | None = None) -> dict[str, Any]:
         self.__exclude_field = exclude_field or set()
-        return asdict(self, dict_factory=self.dict_factory)
+        res = asdict(self, dict_factory=self.dict_factory)
+        members = vars(self.__class__).items()
+        for _k, v in members:
+            if isinstance(v, property):
+                res[_k] = getattr(self, _k)
+        return res
 
     def dict_factory(self, items: list[tuple[str, Any]]) -> dict[str, Any]:
         result = {}

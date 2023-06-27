@@ -1,9 +1,6 @@
-from pydantic import BaseModel, validator
-
-from app.core.schema import validate_username
+from pydantic import BaseModel
 
 
 class LoginScheme(BaseModel):
     username: str
     password: str
-    _username = validator("username", allow_reuse=True)(validate_username)

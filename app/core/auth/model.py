@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import TYPE_CHECKING, Self
 
-from sqlalchemy import BigInteger, Date, Index, SmallInteger, String, select
+from sqlalchemy import BigInteger, Date, Index, SmallInteger, String, or_, select
 from sqlalchemy.orm import Mapped, mapped_column
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -40,7 +40,7 @@ class User(BaseModel):
     @classmethod
     def validate_credential(cls, username: str, password: str) -> Self | None:
         """验证用户和密码是否正确."""
-        one = cls.get_by_attr(username=username)
+        one = cls.get_by_attr(or_(cls.username == username, cls.mobile == username), cls.is_deleted == 0)
         if one and one.check_password(password):
             return one
         return None

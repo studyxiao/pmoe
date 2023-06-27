@@ -72,7 +72,7 @@ def encode_token(
 
 def decode_token(
     token: str,
-    secret_key: str | None = None,
+    secret_key: str,
     algorithm: str | None = "HS256",
 ) -> dict[str, Any]:
     try:
@@ -92,8 +92,6 @@ def decode_token(
 
 class Auth:
     user: type[User] = User
-    token_url: str = "/token"
-    secret_key: str
 
     def __init__(
         self,
@@ -106,7 +104,9 @@ class Auth:
         self.app = app
         self.config(app)
         # 注册获取 token (登录)的路由
-        app.add_url_rule(self.token_url, view_func=validate(self.login), methods=["POST"])
+        app.add_url_rule(
+            self.app.config.get("JWT_TOKEN_URL", "/token"), view_func=validate(self.login), methods=["POST"]
+        )
         app.before_request(self.before_request)
         app.after_request(self.after_request)
 
@@ -146,7 +146,7 @@ class Auth:
             return None
         data = decode_token(
             token=token_from_header,
-            secret_key=self.app.config.get("JWT_SECRET_KEY"),
+            secret_key=self.app.config.get("JWT_SECRET_KEY"),  # type: ignore
             algorithm=self.app.config.get("JWT_ALGORITHM"),
         )
         user = self.user.get_by_id(data["user_id"])

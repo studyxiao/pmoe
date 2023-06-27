@@ -73,6 +73,30 @@ class APIException(HTTPException):
         return response(environ, start_response)
 
 
+class Success(APIException):
+    status_code: int = 200
+    message: str = "OK"
+    error_code: int = 0
+
+
+class Created(APIException):
+    status_code: int = 201
+    message: str = "Created"
+    error_code: int = 0
+
+
+class Updated(APIException):
+    status_code: int = 202
+    message: str = "Updated"
+    error_code: int = 0
+
+
+class Deleted(APIException):
+    status_code: int = 204
+    message: str = "Deleted"
+    error_code: int = 0
+
+
 class NotFound(APIException):
     status_code: int = 404
     message: str = "Not Found"

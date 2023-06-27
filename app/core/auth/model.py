@@ -23,14 +23,14 @@ class User(BaseModel):
     status: Mapped[int] = mapped_column(SmallInteger, default=0, comment="状态: 0-未激活, 1-正常, 2-禁言, 3-拉黑")
     is_deleted: Mapped[int] = mapped_column(SmallInteger, default=0, comment="是否删除: 0-未删除, 1-已删除")
     gender: Mapped[int] = mapped_column(SmallInteger, default=0, comment="性别: 0-未设置, 1-女, 2-男")
-    birthday: Mapped[date] = mapped_column(Date, default=datetime.today)
+    birthday: Mapped[date] = mapped_column(Date, default_factory=datetime.today)
     address: Mapped[str] = mapped_column(String(100), default="", comment="所在地")
     company: Mapped[str] = mapped_column(String(50), default="")
     career: Mapped[str] = mapped_column(String(50), default="")
     home_url: Mapped[str] = mapped_column(String(100), default="")
     github: Mapped[str] = mapped_column(default=None)
-    create_time: Mapped[T_create_time] = mapped_column(default=None)
-    update_time: Mapped[T_update_time] = mapped_column(default=None)
+    create_time: Mapped[T_create_time] = mapped_column(default_factory=datetime.utcnow)
+    update_time: Mapped[T_update_time] = mapped_column(default_factory=datetime.utcnow)
 
     __table_args__ = (Index("username_del", "username", "is_deleted", unique=True),)
 

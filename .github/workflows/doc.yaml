@@ -38,7 +38,7 @@ jobs:
       - name: Enable Pages App
         uses: actions/configure-pages@v3
       - name: Packaging and Uploading to Stage
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: site
       - name: Deploy from Stage

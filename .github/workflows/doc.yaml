@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up PDM (with Python)
-        uses: pdm-project/setup-pdm@v3
+        uses: pdm-project/setup-pdm@v4
         with:
           python-version: ${{ matrix.python-version }}
           version: ${{ matrix.pdm-version }}

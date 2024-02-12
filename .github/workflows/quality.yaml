@@ -28,4 +28,4 @@ jobs:
       - name: Install dependencies
         run: pdm sync  # 安装依赖，要不 pyright 找不到依赖
       - name: Check by pre-commit
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@v3.0.1
